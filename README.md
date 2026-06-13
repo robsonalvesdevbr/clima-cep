@@ -7,11 +7,11 @@ e retorna a temperatura atual em **Celsius, Fahrenheit e Kelvin** consultando a
 ## URL no Google Cloud Run
 
 ```
-https://<SUA-URL>.run.app
+https://clima-cep-677370371784.us-central1.run.app
 ```
 
-> Substitua pelo endereço gerado no deploy. Exemplo de chamada:
-> `https://<SUA-URL>.run.app/clima/temp?cep=80050250`
+> Exemplo de chamada:
+> `https://clima-cep-677370371784.us-central1.run.app/clima/temp?cep=80050250`
 
 ## Contrato da API
 
