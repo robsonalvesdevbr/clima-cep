@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
@@ -13,6 +14,9 @@ func main() {
 	router := chi.NewRouter()
 	router.Use(middleware.Logger)
 
+	viaCep := database.NewViaCepRepository()
+	handlerCep := handlers.NewCepHandler(viaCep)
+
 	router.Route("/hello", func(r chi.Router) {
 		r.Get("/", handlers.HelloWorldHandler)
 	})
@@ -21,12 +25,10 @@ func main() {
 		r.Get("/", handlers.ClimaHandler)
 	})
 
-	viaCep := database.NewViaCepRepository()
-	handlers := handlers.NewCepHandler(viaCep)
-
 	router.Route("/cep", func(r chi.Router) {
-		r.Get("/", handlers.CepHandler)
+		r.Get("/", handlerCep.CepHandler)
 	})
 
+	fmt.Println("Server running on port 8080")
 	http.ListenAndServe(":8080", router)
 }

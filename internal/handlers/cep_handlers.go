@@ -9,18 +9,18 @@ import (
 )
 
 type CepHandler struct {
-	cep entity.CepRepositoryInterface
+	cepRepository entity.CepRepositoryInterface
 }
 
-func NewCepHandler(cep entity.CepRepositoryInterface) *CepHandler {
+func NewCepHandler(cepRepository entity.CepRepositoryInterface) *CepHandler {
 	return &CepHandler{
-		cep: cep,
+		cepRepository: cepRepository,
 	}
 }
 
 func (ch *CepHandler) CepHandler(w http.ResponseWriter, r *http.Request) {
 	cep := r.URL.Query().Get("cep")
-	result, err := ch.cep.GetCEP(cep)
+	result, err := ch.cepRepository.GetCEP(cep)
 	if err != nil {
 		if err == database.CEPInvalidoError {
 			http.Error(w, err.Error(), http.StatusUnprocessableEntity)
