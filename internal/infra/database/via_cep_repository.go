@@ -24,9 +24,9 @@ func NewViaCepRepository() *ViaCepRepository {
 	}
 }
 
-func (r *ViaCepRepository) GetCEP(cep string) (any, error) {
+func (r *ViaCepRepository) GetCEP(cep string) (entity.ClimaCEP, error) {
 	if !r.viaCep.ValidateCEP(cep) {
-		return entity.ViaCep{}, CEPInvalidoError
+		return entity.ClimaCEP{}, CEPInvalidoError
 	}
 
 	u := url.URL{
@@ -37,7 +37,7 @@ func (r *ViaCepRepository) GetCEP(cep string) (any, error) {
 
 	req, err := http.Get(u.String())
 	if err != nil {
-		return entity.ViaCep{}, CEPNaoEncontradoError
+		return entity.ClimaCEP{}, CEPNaoEncontradoError
 	}
 	defer req.Body.Close()
 
@@ -47,14 +47,16 @@ func (r *ViaCepRepository) GetCEP(cep string) (any, error) {
 	}
 
 	if err := json.NewDecoder(req.Body).Decode(&response); err != nil {
-		return entity.ViaCep{}, err
+		return entity.ClimaCEP{}, err
 	}
 
 	if isTrueJSONValue(response.Erro) {
-		return entity.ViaCep{}, CEPNaoEncontradoError
+		return entity.ClimaCEP{}, CEPNaoEncontradoError
 	}
 
-	return response.ViaCep, nil
+	return entity.ClimaCEP{
+		ViaCep: response.ViaCep,
+	}, nil
 }
 
 func isTrueJSONValue(value json.RawMessage) bool {

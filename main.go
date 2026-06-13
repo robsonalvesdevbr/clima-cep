@@ -17,12 +17,15 @@ func main() {
 	viaCep := database.NewViaCepRepository()
 	handlerCep := handlers.NewCepHandler(viaCep)
 
+	weatherApi := database.NewWeatherAPIRepository()
+	climaHandler := handlers.NewClimaHandler(viaCep, weatherApi)
+
 	router.Route("/hello", func(r chi.Router) {
 		r.Get("/", handlers.HelloWorldHandler)
 	})
 
 	router.Route("/clima", func(r chi.Router) {
-		r.Get("/", handlers.ClimaHandler)
+		r.Get("/", climaHandler.ClimaHandler)
 	})
 
 	router.Route("/cep", func(r chi.Router) {

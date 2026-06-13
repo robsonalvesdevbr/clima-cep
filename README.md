@@ -21,3 +21,9 @@ curl <http://localhost:8080/cep?cep=80050250>
 # Busca do clima
 curl http://localhost:8080/clima?cep=80050250
 ```
+
+231c557276604a7e9b4181139261306
+
+<https://api.weatherapi.com/v1/current.json?key=231c557276604a7e9b4181139261306&q=Curitiba&aqi=no>
+
+<https://api.weatherapi.com/v1/current.json?key=231c557276604a7e9b4181139261306&q=80050250:Curitiba&aqi=no>

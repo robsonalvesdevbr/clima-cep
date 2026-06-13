@@ -27,3 +27,6 @@ GET {{address}}/cep?cep=9995025 HTTP/1.1
 Host: localhost:8080
 Accept: application/json, text/plain, */*
 Content-Type: application/json
+
+###
+GET {{address}}/clima?cep=80050250 HTTP/1.1

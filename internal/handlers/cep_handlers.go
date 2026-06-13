@@ -35,5 +35,5 @@ func (ch *CepHandler) CepHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(result)
+	json.NewEncoder(w).Encode(result.ViaCep)
 }
