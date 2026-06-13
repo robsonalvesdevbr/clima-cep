@@ -21,6 +21,10 @@ func main() {
 	weatherApi := database.NewWeatherAPIRepository()
 	climaHandler := handlers.NewClimaHandler(viaCep, weatherApi)
 
+	router.Route("/", func(r chi.Router) {
+		r.Get("/", handlers.HelloWorldHandler)
+	})
+
 	router.Route("/hello", func(r chi.Router) {
 		r.Get("/", handlers.HelloWorldHandler)
 	})
