@@ -29,4 +29,9 @@ Accept: application/json, text/plain, */*
 Content-Type: application/json
 
 ###
+# Retorna o clima de uma cidade a partir do CEP
 GET {{address}}/clima?cep=80050250 HTTP/1.1
+
+###
+# Retorna a temperatura em Celsius, Fahrenheit e Kelvin de uma cidade a partir do CEP
+GET {{address}}/clima/temp?cep=80050250 HTTP/1.1

@@ -26,6 +26,7 @@ func main() {
 
 	router.Route("/clima", func(r chi.Router) {
 		r.Get("/", climaHandler.ClimaHandler)
+		r.Get("/temp", climaHandler.TempHandler)
 	})
 
 	router.Route("/cep", func(r chi.Router) {
