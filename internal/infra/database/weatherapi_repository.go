@@ -5,9 +5,20 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"os"
 
 	"github.com/robsonalvesdevbr/clima-cep-fullcycle/internal/entity"
 )
+
+// defaultWeatherAPIKey é usada como fallback quando WEATHER_API_KEY não está definida.
+const defaultWeatherAPIKey = "231c557276604a7e9b4181139261306"
+
+func weatherAPIKey() string {
+	if key := os.Getenv("WEATHER_API_KEY"); key != "" {
+		return key
+	}
+	return defaultWeatherAPIKey
+}
 
 type WeatherAPIRepository struct {
 	weatherApi entity.WeatherAPI
@@ -25,7 +36,7 @@ func (r *WeatherAPIRepository) GetClima(cep string, city string) (entity.ClimaCE
 		Host:   "api.weatherapi.com",
 		Path:   "/v1/current.json",
 		RawQuery: url.Values{
-			"key": []string{"231c557276604a7e9b4181139261306"},
+			"key": []string{weatherAPIKey()},
 			"q":   []string{fmt.Sprintf("%s:%s", cep, city)},
 			"aqi": []string{"no"},
 		}.Encode(),
@@ -36,6 +47,10 @@ func (r *WeatherAPIRepository) GetClima(cep string, city string) (entity.ClimaCE
 		return entity.ClimaCEP{}, CEPNaoEncontradoError
 	}
 	defer req.Body.Close()
+
+	if req.StatusCode != http.StatusOK {
+		return entity.ClimaCEP{}, CEPNaoEncontradoError
+	}
 
 	var response struct {
 		entity.WeatherAPI
